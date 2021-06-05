@@ -19,11 +19,18 @@ namespace Monitor
             ErrorMessage = "To start the program, you must enter three parameters separated by a space.The first is the name of the process, the second is the allowed lifetime(in minutes and more then 0), and the third is the check frequency(in minutes and more then 0).";
         }
 
+        public static void GetArguments(string[] args, out string processName, out int lifeTime, out int timeToCheck)
+        {
+            processName = args[0];
+            lifeTime = int.Parse(args[1]);
+            timeToCheck = int.Parse(args[2]);
+        }
+
         public void Start()
         {
             try
             {
-                if (AllowedLifeTime == 0 || TimeToCheck == 0)
+                if (AllowedLifeTime <= 0 || TimeToCheck <= 0)
                 {
                     throw new FormatException(ErrorMessage);
                 }
@@ -56,7 +63,6 @@ namespace Monitor
                 throw;
             }
         }
-
         private void KillProcesses(Array array)
         {
             foreach (Process item in array)
@@ -70,12 +76,12 @@ namespace Monitor
                 }
             }
         }
-        private double GetLifeMinutes(DateTime startTime)
+        public double GetLifeMinutes(DateTime startTime)
         {
             double difference = (DateTime.Now - startTime).TotalMinutes;
             return difference;
         }
-        private Boolean IsEmpty(Array array)
+        public Boolean IsEmpty(Array array)
         {
             if (array.Length == 0)
             {
@@ -83,7 +89,7 @@ namespace Monitor
             }
             return false;
         }
-        private int GetMlSeconds(int time)
+        public int GetMlSeconds(int time)
         {
             int mlSeconds = time * 60 * 1000;
             return mlSeconds;

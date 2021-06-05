@@ -8,7 +8,7 @@ namespace Monitor
         {
             try
             {
-                GetArguments(args, out string processName, out int lifeTime, out int timeToCheck);
+                Monitor.GetArguments(args, out string processName, out int lifeTime, out int timeToCheck);
                 Monitor monitor = new(processName, lifeTime, timeToCheck);
                 monitor.Start();
             }
@@ -18,11 +18,6 @@ namespace Monitor
             }
         }
 
-        private static void GetArguments(string[] args, out string processName, out int lifeTime, out int timeToCheck)
-        {
-            processName = args[0];
-            lifeTime = int.Parse(args[1]);
-            timeToCheck = int.Parse(args[2]);
-        }
+
     }
 }
