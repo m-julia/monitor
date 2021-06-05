@@ -6,7 +6,18 @@ namespace Monitor
     {
         public static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            try
+            {
+                Monitor.GetArguments(args, out string processName, out int lifeTime, out int timeToCheck);
+                Monitor monitor = new(processName, lifeTime, timeToCheck);
+                monitor.Start();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
         }
+
+
     }
 }
